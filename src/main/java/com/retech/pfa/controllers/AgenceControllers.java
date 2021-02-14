@@ -1,14 +1,17 @@
 package com.retech.pfa.controllers;
 
 import com.retech.pfa.models.Agence;
+import com.retech.pfa.playLoad.responses.ResponseMessage;
 import com.retech.pfa.services.AgenceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins ="*")
 public class AgenceControllers {
 
     @Autowired
@@ -16,37 +19,42 @@ public class AgenceControllers {
 
     //ajout agence controller
     @RequestMapping(value = "/agences/", method = RequestMethod.POST)
-    public  String addAgence(@RequestBody Agence agence)
+    public ResponseEntity<ResponseMessage>addAgence(@RequestBody Agence agence)
     {
-
-        return agenceService.addAgence(agence) ;
+         String message = this.agenceService.addAgence(agence) ;
+         return new ResponseEntity<>(new ResponseMessage(message) , HttpStatus.OK);
     }
 
     //affichage de tous les agences controller
     @RequestMapping(value = "/agences/", method = RequestMethod.GET)
-    public  List<Agence> getAgences()
+    public  ResponseEntity<List<Agence>> getAgences()
     {
-        return this.agenceService.getAgences() ;
+        List<Agence> agenceList = this.agenceService.getAgences() ;
+        return new ResponseEntity<>(agenceList , HttpStatus.OK);
     }
 
     //recherche agence par nom
+
+
     @RequestMapping(value="/agences/{nom}", method =  RequestMethod.GET)
-    public List<Agence> getAgenceByNom(@PathVariable(value="nom") String nom){
-        return this.agenceService.getAgenceByNom(nom) ;
+    public ResponseEntity<List<Agence>> getAgenceByNom(@PathVariable(value="nom") String nom){
+        List<Agence> agenceList = this.agenceService.getAgenceByNom(nom);
+        return new ResponseEntity<>(agenceList , HttpStatus.OK);
     }
-
-
 
     //Modification d'un seul agence controller
     @RequestMapping(value="/agences/{id}", method =  RequestMethod.PUT)
-    public String  modifAgence(@PathVariable(value="id") Long id, @RequestBody Agence agence){
-        return this.agenceService.modifAgence(id, agence ) ;
+    public ResponseEntity<ResponseMessage>  modifAgence(@PathVariable(value="id") Long id, @RequestBody Agence agence){
+        String message = this.agenceService.modifAgence(id, agence ) ;
+        return new ResponseEntity<>(new ResponseMessage(message) , HttpStatus.OK);
     }
 
     //Suppression d'un seul agence controller
     @RequestMapping(value="/agences/{id}", method =  RequestMethod.DELETE)
-    public List<Agence>supprimerfAgence(@PathVariable(value="id") Long id){
-        return this.agenceService.supprimerAgence(id) ;
-    }
+    public ResponseEntity<List<Agence>>supprimerAgence(@PathVariable(value="id") Long id){
+
+        List<Agence> agenceList = this.agenceService.supprimerAgence(id) ;
+        return new ResponseEntity<>(agenceList, HttpStatus.OK);
+     }
 
 }

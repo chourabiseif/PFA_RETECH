@@ -16,7 +16,6 @@ public class AgenceService {
     public String addAgence(Agence agence){
         this.agenceRepository.save(agence);
         return "Agence ajouté avec succés";
-
     }
 
     // récupération des agences service

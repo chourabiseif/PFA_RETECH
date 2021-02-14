@@ -1,8 +1,11 @@
 package com.retech.pfa.models;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name ="agences" )
@@ -21,6 +24,21 @@ public class Agence {
     private String adresse;
     @NonNull
     private String telephone;
+
+    // created at and updated at
+
+    @Setter(value = AccessLevel.NONE)
+    @Basic(optional = false)
+    @CreationTimestamp
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt = new Date();
+
+    @Setter(value = AccessLevel.NONE)
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt = new Date();
 
     /*public Agence() {
     }

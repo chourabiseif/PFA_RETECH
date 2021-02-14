@@ -1,28 +1,50 @@
 package com.retech.pfa.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
-@Table(name ="utilisateurs" )
+@Table(name ="users" )
 //Lombok annotations
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Utilisateur {
+@RequiredArgsConstructor
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NonNull
     private String nom;
+    @NonNull
     private String prenom;
+    @NonNull
     private String username;
+    @NonNull
     private String motDePasse;
+
     @ManyToOne
     private Agence agence;
+
+    // created at and updated at
+
+    @Setter(value = AccessLevel.NONE)
+    @Basic(optional = false)
+    @CreationTimestamp
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt = new Date();
+
+    @Setter(value = AccessLevel.NONE)
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt = new Date();
 
    /* public Utilisateur() {
     }
