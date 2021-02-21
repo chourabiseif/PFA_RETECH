@@ -13,15 +13,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins ="*")
 public class UserControllers {
     @Autowired
     private UserService userService;
 
     //ajouter utilisateur
-    @RequestMapping(value = "/users/", method = RequestMethod.POST)
-    public ResponseEntity<ResponseMessage> addUser(@RequestBody User user)
+    @RequestMapping(value = "/users/{agenceId}", method = RequestMethod.POST)
+    public ResponseEntity<ResponseMessage> addUser(@RequestBody User user, @PathVariable(value = "agenceId")Long agenceId)
     {
-        String message = this.userService.addUser(user) ;
+        String message = this.userService.addUser(user,agenceId) ;
         return new ResponseEntity<>(new ResponseMessage(message) , HttpStatus.OK);
     }
 
@@ -52,6 +53,12 @@ public class UserControllers {
 
         List<User> userList = this.userService.deleteUser(id) ;
         return new ResponseEntity<>(userList, HttpStatus.OK);
+    }
+    // affect agence to user
+    @RequestMapping(value="/users/{userId}/agence/{agenceId}" , method = RequestMethod.POST)
+    public ResponseEntity<ResponseMessage> affectAgenceToUser(@PathVariable(value ="userId" ) Long userId,@PathVariable(value="agenceId") Long agenceId){
+        String message = this.userService.affectAgenceToUser(userId,agenceId);
+        return new  ResponseEntity<>(new ResponseMessage(message), HttpStatus.OK);
     }
 
 }
