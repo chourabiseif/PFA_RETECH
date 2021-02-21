@@ -41,9 +41,9 @@ public class UserControllers {
         return new ResponseEntity<>(user , HttpStatus.OK);
     }
     //Modification utilisateur
-    @RequestMapping(value="/users/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<ResponseMessage>  modifUser(@PathVariable(value="id") Long id, @RequestBody User user){
-        String message = this.userService.modifUser(id,user);
+    @RequestMapping(value="/users/{id}/{agenceId}", method =  RequestMethod.PUT)
+    public ResponseEntity<ResponseMessage>  modifUser(@PathVariable(value="id") Long id,@PathVariable(value="agenceId") Long agenceId, @RequestBody User user){
+        String message = this.userService.modifUser(id,user,agenceId);
         return new ResponseEntity<>(new ResponseMessage(message) , HttpStatus.OK);
     }
 
@@ -54,7 +54,8 @@ public class UserControllers {
         List<User> userList = this.userService.deleteUser(id) ;
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
-    // affect agence to user
+    // affect agence to user not used
+
     @RequestMapping(value="/users/{userId}/agence/{agenceId}" , method = RequestMethod.POST)
     public ResponseEntity<ResponseMessage> affectAgenceToUser(@PathVariable(value ="userId" ) Long userId,@PathVariable(value="agenceId") Long agenceId){
         String message = this.userService.affectAgenceToUser(userId,agenceId);

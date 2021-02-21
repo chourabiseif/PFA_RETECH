@@ -24,7 +24,7 @@ public class UserService {
 
         user.setAgence(agence);
         this.userRepository.save(user);
-         return "Utilisateur ajouté avec succés";
+        return "Utilisateur ajouté avec succés";
     }
 
     // récupérer les utilisateurs
@@ -38,13 +38,16 @@ public class UserService {
     }
 
     //Modifier utilisateur
-    public String modifUser(Long id , User user){
+    public String modifUser(Long id , User user , Long agenceId){
+
+        Agence agence = this.agenceRepository.findById(agenceId).get();
         User userfound = this.userRepository.findById(id).get();
         userfound.setMotDePasse(user.getMotDePasse());
         userfound.setNom(user.getNom());
         userfound.setPrenom(user.getPrenom());
         userfound.setUsername(user.getUsername());
 
+        userfound.setAgence(agence);
         this.userRepository.save(userfound);
         return "Utilisateur modifié";
     }
