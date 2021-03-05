@@ -1,6 +1,7 @@
 package com.retech.pfa.controllers;
 
 
+import com.retech.pfa.exceptions.ResourceNotFoundException;
 import com.retech.pfa.models.Agence;
 import com.retech.pfa.models.User;
 import com.retech.pfa.playLoad.responses.ResponseMessage;
@@ -20,8 +21,7 @@ public class UserControllers {
 
     //ajouter utilisateur
     @RequestMapping(value = "/users/{agenceId}", method = RequestMethod.POST)
-    public ResponseEntity<ResponseMessage> addUser(@RequestBody User user, @PathVariable(value = "agenceId")Long agenceId)
-    {
+    public ResponseEntity<ResponseMessage> addUser(@RequestBody User user, @PathVariable(value = "agenceId")Long agenceId) throws ResourceNotFoundException {
         String message = this.userService.addUser(user,agenceId) ;
         return new ResponseEntity<>(new ResponseMessage(message) , HttpStatus.OK);
     }
@@ -36,20 +36,20 @@ public class UserControllers {
 
     // récupérer user by id
     @RequestMapping(value="/users/{id}", method =  RequestMethod.GET)
-    public ResponseEntity<User> getUserById(@PathVariable(value="id") Long id){
+    public ResponseEntity<User> getUserById(@PathVariable(value="id") Long id) throws ResourceNotFoundException {
        User user = this.userService.getUserByID(id);
         return new ResponseEntity<>(user , HttpStatus.OK);
     }
     //Modification utilisateur
     @RequestMapping(value="/users/{id}/{agenceId}", method =  RequestMethod.PUT)
-    public ResponseEntity<ResponseMessage>  modifUser(@PathVariable(value="id") Long id,@PathVariable(value="agenceId") Long agenceId, @RequestBody User user){
+    public ResponseEntity<ResponseMessage>  modifUser(@PathVariable(value="id") Long id,@PathVariable(value="agenceId") Long agenceId, @RequestBody User user) throws ResourceNotFoundException {
         String message = this.userService.modifUser(id,user,agenceId);
         return new ResponseEntity<>(new ResponseMessage(message) , HttpStatus.OK);
     }
 
     // Suppression utilisateur
     @RequestMapping(value="/users/{id}", method =  RequestMethod.DELETE)
-    public ResponseEntity<List<User>>deleteUser(@PathVariable(value="id") Long id){
+    public ResponseEntity<List<User>>deleteUser(@PathVariable(value="id") Long id) throws ResourceNotFoundException {
 
         List<User> userList = this.userService.deleteUser(id) ;
         return new ResponseEntity<>(userList, HttpStatus.OK);

@@ -1,11 +1,13 @@
 package com.retech.pfa.services;
 
+import com.retech.pfa.exceptions.ResourceNotFoundException;
 import com.retech.pfa.models.Agence;
 import com.retech.pfa.repositories.AgenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AgenceService {
@@ -31,21 +33,34 @@ public class AgenceService {
     }
 
     //modification d'un agence service
-    public String modifAgence(Long id, Agence agence){
-        Agence agencefound = this.agenceRepository.findById(id).get();
-        agencefound.setNom(agence.getNom());
-        agencefound.setAdresse(agence.getAdresse());
-        agencefound.setTelephone(agence.getTelephone());
+    public String modifAgence(Long id, Agence agence) throws ResourceNotFoundException {
+       Optional<Agence>  agenceData = this.agenceRepository.findById(id);
+       if (agenceData.isPresent()){
+           Agence agencefound = agenceData.orElseThrow(()-> new ResourceNotFoundException("Agence not found"));
+           agencefound.setNom(agence.getNom());
+           agencefound.setAdresse(agence.getAdresse());
+           agencefound.setTelephone(agence.getTelephone());
 
 
-        this.agenceRepository.save(agencefound);
-        return " agence modifié";
+           this.agenceRepository.save(agencefound);
+           return " agence modifié";
+       }else{
+           throw new ResourceNotFoundException("Agence not found");
+       }
+
     }
 
     //Suppression d'un agence service
-    public List<Agence> supprimerAgence(Long id){
-        this.agenceRepository.deleteById(id);
-        return this.agenceRepository.findAll();
+    public List<Agence> supprimerAgence(Long id) throws ResourceNotFoundException {
+        Optional<Agence> agenceData = this.agenceRepository.findById(id);
+        if(agenceData.isPresent()){
+            this.agenceRepository.deleteById(id);
+            return this.agenceRepository.findAll();
+        }
+        else{
+            throw  new ResourceNotFoundException("Agence not found");
+        }
+
 
     }
 

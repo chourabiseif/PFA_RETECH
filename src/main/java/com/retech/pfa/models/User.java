@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -15,9 +16,10 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(value = AccessLevel.NONE)
     private Long id;
     @NonNull
     private String nom;
@@ -29,6 +31,7 @@ public class User {
     private String motDePasse;
 
     @ManyToOne
+    @JoinColumn(name="agence_id", nullable=true)
     private Agence agence;
 
     // created at and updated at

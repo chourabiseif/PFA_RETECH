@@ -1,5 +1,6 @@
 package com.retech.pfa.controllers;
 
+import com.retech.pfa.exceptions.ResourceNotFoundException;
 import com.retech.pfa.models.Agence;
 import com.retech.pfa.playLoad.responses.ResponseMessage;
 import com.retech.pfa.services.AgenceService;
@@ -44,14 +45,14 @@ public class AgenceControllers {
 
     //Modification d'un seul agence controller
     @RequestMapping(value="/agences/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<ResponseMessage>  modifAgence(@PathVariable(value="id") Long id, @RequestBody Agence agence){
+    public ResponseEntity<ResponseMessage>  modifAgence(@PathVariable(value="id") Long id, @RequestBody Agence agence) throws ResourceNotFoundException {
         String message = this.agenceService.modifAgence(id, agence ) ;
         return new ResponseEntity<>(new ResponseMessage(message) , HttpStatus.OK);
     }
 
     //Suppression d'un seul agence controller
     @RequestMapping(value="/agences/{id}", method =  RequestMethod.DELETE)
-    public ResponseEntity<List<Agence>>supprimerAgence(@PathVariable(value="id") Long id){
+    public ResponseEntity<List<Agence>>supprimerAgence(@PathVariable(value="id") Long id) throws ResourceNotFoundException {
 
         List<Agence> agenceList = this.agenceService.supprimerAgence(id) ;
         return new ResponseEntity<>(agenceList, HttpStatus.OK);

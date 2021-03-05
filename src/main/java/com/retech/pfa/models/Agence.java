@@ -1,10 +1,13 @@
 package com.retech.pfa.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name ="agences" )
@@ -13,9 +16,10 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class Agence {
+public class Agence implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(value = AccessLevel.NONE)
     private Long id;
     @NonNull
     private String nom;
@@ -23,6 +27,11 @@ public class Agence {
     private String adresse;
     @NonNull
     private String telephone;
+
+    // OneToMany Relations
+    @JsonIgnore
+    @OneToMany(mappedBy="agence")
+    private List<User> users;
 
     // created at and updated at
 
