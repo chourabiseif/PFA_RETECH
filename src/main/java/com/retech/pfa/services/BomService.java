@@ -20,6 +20,9 @@ public class BomService {
     public void save(MultipartFile file) {
         try {
             List<Bom> boms = ExcelHelper.excelToBom(file.getInputStream());
+            //delete the old data
+            bomRepository.deleteAll();
+            //save the new data from bom
             bomRepository.saveAll(boms);
         } catch (IOException e) {
             throw new RuntimeException("fail to store excel data: " + e.getMessage());

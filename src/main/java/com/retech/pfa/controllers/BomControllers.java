@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/bom")
+@CrossOrigin(origins ="*")
 public class BomControllers {
     @Autowired
     BomService bomService;

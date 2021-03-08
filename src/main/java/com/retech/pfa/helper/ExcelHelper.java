@@ -17,7 +17,7 @@ import java.util.List;
 public class ExcelHelper {
     public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     //static String[] HEADERs = { "Id", "Title", "Description", "Published" };
-    static String SHEET = "Tunisia";
+    //static String SHEET = "Tunisia";
 
     // Method to verify if the uploaded file has excel format
     public static boolean hasExcelFormat(MultipartFile file) {
@@ -33,7 +33,7 @@ public class ExcelHelper {
         try {
             Workbook workbook = new XSSFWorkbook(is);
 
-            Sheet sheet = workbook.getSheet(SHEET);
+            Sheet sheet = workbook.getSheetAt(0);
             Iterator<Row> rows = sheet.iterator();
 
             List<Bom> boms = new ArrayList<Bom>();
