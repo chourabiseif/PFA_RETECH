@@ -6,11 +6,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "StockTunis")
+@Table(name = "StockSousse")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StockTunis {
+public class StockSousse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(value = AccessLevel.NONE)

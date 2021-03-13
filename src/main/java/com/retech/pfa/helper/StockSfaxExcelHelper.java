@@ -1,6 +1,6 @@
 package com.retech.pfa.helper;
 
-import com.retech.pfa.models.Bom;
+import com.retech.pfa.models.StockSfax;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -14,10 +14,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ExcelHelper {
+public class StockSfaxExcelHelper {
     public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    //static String[] HEADERs = { "Id", "Title", "Description", "Published" };
-    //static String SHEET = "Tunisia";
 
     // Method to verify if the uploaded file has excel format
     public static boolean hasExcelFormat(MultipartFile file) {
@@ -28,29 +26,30 @@ public class ExcelHelper {
 
         return true;
     }
+    ///////////////////////////////////////////////////////////
 
-    public static List<Bom> excelToBom(InputStream is) {
+    public static List<StockSfax> exceltoStockSfax(InputStream is) {
         try {
             Workbook workbook = new XSSFWorkbook(is);
 
             Sheet sheet = workbook.getSheetAt(0);
             Iterator<Row> rows = sheet.iterator();
 
-            List<Bom> boms = new ArrayList<Bom>();
+            List<StockSfax> StockSfaxData = new ArrayList<StockSfax>();
 
             int rowNumber = 0;
             while (rows.hasNext()) {
                 Row currentRow = rows.next();
 
                 // skip header
-                if (rowNumber == 0) {
+                if (rowNumber== 0) {
                     rowNumber++;
                     continue;
                 }
 
                 Iterator<Cell> cellsInRow = currentRow.iterator();
 
-                Bom bom = new Bom();
+                StockSfax stockSfax = new StockSfax();
 
                 int cellIdx = 0;
                 while (cellsInRow.hasNext()) {
@@ -58,51 +57,59 @@ public class ExcelHelper {
 
                     switch (cellIdx) {
                         case 0:
-                            bom.setCode((long) currentCell.getNumericCellValue());
+                            stockSfax.setCustomerCode(currentCell.getStringCellValue());
                             break;
 
                         case 1:
-                            bom.setSAP_Code((long) currentCell.getNumericCellValue());
+                            stockSfax.setSerialNo1(currentCell.getStringCellValue());
                             break;
 
                         case 2:
-                            bom.setBrand(currentCell.getStringCellValue());
+                            stockSfax.setSerialNo2(currentCell.getStringCellValue());
                             break;
                         case 3:
-                            bom.setModel(currentCell.getStringCellValue());
+                            stockSfax.setMaterialCode(currentCell.getStringCellValue());
                             break;
                         case 4:
-                            bom.setColor(currentCell.getStringCellValue());
+                            stockSfax.setMaterialDesc(currentCell.getStringCellValue());
                             break;
                         case 5:
-                            bom.setMaterialdescriptionChinese(currentCell.getStringCellValue());
+                            stockSfax.setQuantity((long) currentCell.getNumericCellValue());
                             break;
                         case 6:
-                            bom.setMaterialdescriptionEnglish(currentCell.getStringCellValue());
+                            /*if(currentCell.getStringCellValue() == null){
+                                stockTunis.setEmployeeName("not found");
+                                System.out.println("bla bla");
+                            } else{
+                                stockTunis.setEmployeeName(currentCell.getStringCellValue());
+                                }*/
+                            stockSfax.setEmployeeName(currentCell.getStringCellValue());
                             break;
                         case 7:
-                            bom.setBOMlevel((long) currentCell.getNumericCellValue());
+                            stockSfax.setPartnerName(currentCell.getStringCellValue());
                             break;
                         case 8:
-                            bom.setComponentdescriptionChinese(currentCell.getStringCellValue());
+                            stockSfax.setFirstName(currentCell.getStringCellValue());
                             break;
                         case 9:
-                            bom.setComponentdescriptionEnglish(currentCell.getStringCellValue());
+                            stockSfax.setStoreLocation(currentCell.getStringCellValue());
                             break;
                         case 10:
-                            bom.setUnitQuantity((long) currentCell.getNumericCellValue());
+                            stockSfax.setBinCode(currentCell.getStringCellValue());
                             break;
                         case 11:
-                            bom.setBOMCategory(currentCell.getStringCellValue());
+                            stockSfax.setPrice( (float)currentCell.getNumericCellValue());
                             break;
                         case 12:
-                            bom.setProcurementtype(currentCell.getStringCellValue());
+                            stockSfax.setGRNDate(currentCell.getDateCellValue());
+
                             break;
                         case 13:
-                            bom.setMaterialGroupCode((long) currentCell.getNumericCellValue());
+                            stockSfax.setWarrantyStatus(currentCell.getStringCellValue());
+
                             break;
                         case 14:
-                            bom.setMaterialGroupChinese(currentCell.getStringCellValue());
+                            stockSfax.setClassification(currentCell.getStringCellValue());
                             break;
                         default:
                             break;
@@ -111,15 +118,14 @@ public class ExcelHelper {
                     cellIdx++;
                 }
 
-                boms.add(bom);
+                StockSfaxData.add(stockSfax);
             }
 
             workbook.close();
 
-            return boms;
+            return StockSfaxData;
         } catch (IOException e) {
             throw new RuntimeException("fail to parse Excel file: " + e.getMessage());
         }
     }
-
 }

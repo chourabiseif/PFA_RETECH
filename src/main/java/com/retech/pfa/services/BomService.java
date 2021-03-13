@@ -1,6 +1,6 @@
 package com.retech.pfa.services;
 
-import com.retech.pfa.helper.ExcelHelper;
+import com.retech.pfa.helper.BOMExcelHelper;
 import com.retech.pfa.models.Bom;
 import com.retech.pfa.repositories.BomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class BomService {
 
     public void save(MultipartFile file) {
         try {
-            List<Bom> boms = ExcelHelper.excelToBom(file.getInputStream());
+            List<Bom> boms = BOMExcelHelper.excelToBom(file.getInputStream());
             //delete the old data
             bomRepository.deleteAll();
             //save the new data from bom

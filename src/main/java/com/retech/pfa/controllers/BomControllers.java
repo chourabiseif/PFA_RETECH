@@ -1,6 +1,6 @@
 package com.retech.pfa.controllers;
 
-import com.retech.pfa.helper.ExcelHelper;
+import com.retech.pfa.helper.BOMExcelHelper;
 import com.retech.pfa.models.Bom;
 import com.retech.pfa.playLoad.responses.ResponseMessage;
 
@@ -25,7 +25,7 @@ public class BomControllers {
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
         String message = "";
 
-        if (ExcelHelper.hasExcelFormat(file)) {
+        if (BOMExcelHelper.hasExcelFormat(file)) {
             try {
                 bomService.save(file);
 

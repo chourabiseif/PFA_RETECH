@@ -1,9 +1,10 @@
 package com.retech.pfa.controllers;
 
-import com.retech.pfa.helper.CountryStockExcelHelper;
-import com.retech.pfa.models.CountryStock;
+import com.retech.pfa.helper.StockSousseExcelHelper;
+
+import com.retech.pfa.models.StockSousse;
 import com.retech.pfa.playLoad.responses.ResponseMessage;
-import com.retech.pfa.services.CountryStockService;
+import com.retech.pfa.services.StockSousseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,20 +15,20 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/stock/country")
-public class CountryStockControllers {
+@RequestMapping("/stock/sousse")
+public class StockSousseControllers {
     @Autowired
-    CountryStockService countryStockService;
+    StockSousseService stockSousseService;
 
     @PostMapping("/upload")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
         String message = "";
 
-        if (CountryStockExcelHelper.hasExcelFormat(file)) {
+        if (StockSousseExcelHelper.hasExcelFormat(file)) {
             try {
-                countryStockService.save(file);
+                stockSousseService.save(file);
 
-                message = "Uploaded the file successfully): " + file.getOriginalFilename();
+                message = "Uploaded the file successfully: " + file.getOriginalFilename();
                 return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
             } catch (Exception e) {
                 Throwable cause = e.getCause();
@@ -40,10 +41,11 @@ public class CountryStockControllers {
         message = "Please upload an excel file!";
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
     }
-    // get all data from countryStock table
+    // get all data from StockSousse table
     @GetMapping("/")
-    public  ResponseEntity<List<CountryStock>> getCountryStocks(){
-        List<CountryStock> listCountryStock = this.countryStockService.getCountryStocks();
-        return new ResponseEntity<>(listCountryStock , HttpStatus.OK);
+    public  ResponseEntity<List<StockSousse>> getStockSousse(){
+        List<StockSousse> stockTunisList = this.stockSousseService.getStockSousse();
+        return new ResponseEntity<>(stockTunisList , HttpStatus.OK);
     }
+
 }

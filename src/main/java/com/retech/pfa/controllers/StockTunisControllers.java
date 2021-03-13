@@ -1,7 +1,7 @@
 package com.retech.pfa.controllers;
 
 
-import com.retech.pfa.helper.StockTunisExcelHelper;
+import com.retech.pfa.helper.StockTunislExcelHelper;
 
 import com.retech.pfa.models.StockTunis;
 import com.retech.pfa.playLoad.responses.ResponseMessage;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/stocktunis")
+@RequestMapping("/stock/tunis")
 public class StockTunisControllers {
     @Autowired
     StockTunisService stockTunisService;
@@ -25,7 +25,7 @@ public class StockTunisControllers {
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
         String message = "";
 
-        if (StockTunisExcelHelper.hasExcelFormat(file)) {
+        if (StockTunislExcelHelper.hasExcelFormat(file)) {
             try {
                 stockTunisService.save(file);
 
