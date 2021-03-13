@@ -31,6 +31,7 @@ public class BomService {
 
     // get all data from bom table
     public List<Bom> getBoms() {
-        return this.bomRepository.findAll();
+
+        return this.bomRepository.findAll( );
     }
 }
