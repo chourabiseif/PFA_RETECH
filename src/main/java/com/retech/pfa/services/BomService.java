@@ -35,8 +35,16 @@ public class BomService {
         return this.bomRepository.findAll( );
     }
 
-    // search
-    public List<Bom> searchBom(String description , String model , String sap){
-      return   this.bomRepository.searchBom(description, model ,sap);
+    // search with description
+    public List<Bom> searchBomDescription(String description){
+      return   this.bomRepository.searchBomDescription(description);
+    }
+    // search with description
+    public List<Bom> searchBomModel(String model){
+        return   this.bomRepository.searchBomModel(model);
+    }
+    // search with description
+    public List<Bom> searchBomSapCode(long sapCode){
+        return   this.bomRepository.searchBomSapCode(sapCode);
     }
 }

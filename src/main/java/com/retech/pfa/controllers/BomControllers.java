@@ -46,10 +46,22 @@ public class BomControllers {
         List<Bom> listBom = this.bomService.getBoms();
         return new ResponseEntity<>(listBom , HttpStatus.OK);
     }
-    // search
-    @GetMapping("/{description}/{model}/{sap}")
-    public ResponseEntity<List<Bom>> searchBom(@PathVariable(value = "description") String description, @PathVariable(value = "model") String model, @PathVariable(value = "sap") String sap){
-        List<Bom> bomList = this.bomService.searchBom(description,model,sap);
+    // search with description
+    @GetMapping("/description/{description}")
+    public ResponseEntity<List<Bom>> searchBomDescription(@PathVariable(value = "description") String description){
+        List<Bom> bomList = this.bomService.searchBomDescription(description);
+        return new ResponseEntity<>(bomList, HttpStatus.OK);
+    }
+    // search with description
+    @GetMapping("/model/{model}")
+    public ResponseEntity<List<Bom>> searchBomModel(@PathVariable(value = "model") String model){
+        List<Bom> bomList = this.bomService.searchBomModel(model);
+        return new ResponseEntity<>(bomList, HttpStatus.OK);
+    }
+    // search with description
+    @GetMapping("/sapCode/{sapCode}")
+    public ResponseEntity<List<Bom>> searchBomSapCode(@PathVariable(value = "sapCode") long sapCode){
+        List<Bom> bomList = this.bomService.searchBomSapCode(sapCode);
         return new ResponseEntity<>(bomList, HttpStatus.OK);
     }
 

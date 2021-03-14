@@ -11,9 +11,16 @@ import java.util.List;
 
 @Repository
 public interface BomRepository  extends JpaRepository<Bom, Long> {
-    //search bom
-    @Query(value="SELECT * from bom where componentdescription_english like %?1% or model like %?2% or sap_code like %?3%" , nativeQuery = true)
-    List<Bom> searchBom(String description, String model,String sap_code);
+    //search description
+    @Query(value="SELECT * from bom where componentdescription_english like %?1% " , nativeQuery = true)
+    List<Bom> searchBomDescription(String description);
+    //search model
+    @Query(value="SELECT * from bom where  model like %?1% " , nativeQuery = true)
+    List<Bom> searchBomModel(String model);
+    //search
+    @Query(value="SELECT * from bom where  sap_code like %?1% " , nativeQuery = true)
+    List<Bom> searchBomSapCode(long sapCode);
+
 
 }
 
