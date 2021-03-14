@@ -3,6 +3,7 @@ package com.retech.pfa.controllers;
 import com.retech.pfa.helper.StockSousseExcelHelper;
 
 import com.retech.pfa.models.StockSousse;
+import com.retech.pfa.models.StockTunis;
 import com.retech.pfa.playLoad.responses.ResponseMessage;
 import com.retech.pfa.services.StockSousseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,18 @@ public class StockSousseControllers {
     public  ResponseEntity<List<StockSousse>> getStockSousse(){
         List<StockSousse> stockTunisList = this.stockSousseService.getStockSousse();
         return new ResponseEntity<>(stockTunisList , HttpStatus.OK);
+    }
+    // search with materialcode
+    @GetMapping("/materialCode/{materialCode}")
+    public ResponseEntity<List<StockSousse>> searchMaterialCode(@PathVariable(value = "materialCode") String materialCode){
+        List<StockSousse> stockSousseList = this.stockSousseService.searchMaterialCode(materialCode);
+        return new ResponseEntity<>(stockSousseList, HttpStatus.OK);
+    }
+    // search with description
+    @GetMapping("/materialDesc/{materialDesc}")
+    public ResponseEntity<List<StockSousse>> searchMaterialDesc(@PathVariable(value = "materialDesc") String materialDesc){
+        List<StockSousse> stockSousseList = this.stockSousseService.searchMaterialDesc(materialDesc);
+        return new ResponseEntity<>(stockSousseList, HttpStatus.OK);
     }
 
 }

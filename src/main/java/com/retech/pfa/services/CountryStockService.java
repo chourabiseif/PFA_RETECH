@@ -34,4 +34,12 @@ public class CountryStockService {
 
         return this.countryStockRepository.findAll( );
     }
+    // search with Material Code
+    public List<CountryStock> searchMaterialCode(String materialCode){
+        return   this.countryStockRepository.searchMaterialCode(materialCode);
+    }
+    // search with Material Name
+    public List<CountryStock> searchMaterialName(String materialName){
+        return   this.countryStockRepository.searchMaterialName(materialName);
+    }
 }

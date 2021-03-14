@@ -3,6 +3,7 @@ package com.retech.pfa.services;
 import com.retech.pfa.helper.StockSousseExcelHelper;
 import com.retech.pfa.helper.StockTunislExcelHelper;
 import com.retech.pfa.models.StockSousse;
+import com.retech.pfa.models.StockTunis;
 import com.retech.pfa.repositories.StockSousseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,13 @@ public class StockSousseService {
     public List<StockSousse> getStockSousse() {
 
         return this.stockSousseRepository.findAll( );
+    }
+    // search with Material Code
+    public List<StockSousse> searchMaterialCode(String materialCode){
+        return   this.stockSousseRepository.searchMaterialCode(materialCode);
+    }
+    // search with Material desc
+    public List<StockSousse> searchMaterialDesc(String materialDesc){
+        return   this.stockSousseRepository.searchMaterialDesc(materialDesc);
     }
 }

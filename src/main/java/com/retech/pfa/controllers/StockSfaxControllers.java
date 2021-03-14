@@ -3,6 +3,7 @@ package com.retech.pfa.controllers;
 import com.retech.pfa.helper.StockSfaxExcelHelper;
 
 import com.retech.pfa.models.StockSfax;
+import com.retech.pfa.models.StockTunis;
 import com.retech.pfa.playLoad.responses.ResponseMessage;
 import com.retech.pfa.services.StockSfaxService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,17 @@ public class StockSfaxControllers {
     public  ResponseEntity<List<StockSfax>> getStockSfax(){
         List<StockSfax> stockSfaxList = this.stockSfaxService.getStockSfax();
         return new ResponseEntity<>(stockSfaxList , HttpStatus.OK);
+    }
+    // search with materialcode
+    @GetMapping("/materialCode/{materialCode}")
+    public ResponseEntity<List<StockSfax>> searchMaterialCode(@PathVariable(value = "materialCode") String materialCode){
+        List<StockSfax> stockSfaxList = this.stockSfaxService.searchMaterialCode(materialCode);
+        return new ResponseEntity<>(stockSfaxList, HttpStatus.OK);
+    }
+    // search with description
+    @GetMapping("/materialDesc/{materialDesc}")
+    public ResponseEntity<List<StockSfax>> searchMaterialDesc(@PathVariable(value = "materialDesc") String materialDesc){
+        List<StockSfax> stockSfaxList = this.stockSfaxService.searchMaterialDesc(materialDesc);
+        return new ResponseEntity<>(stockSfaxList, HttpStatus.OK);
     }
 }

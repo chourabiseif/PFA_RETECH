@@ -34,4 +34,12 @@ public class StockSfaxService {
 
         return this.stockSfaxRepository.findAll( );
     }
+    // search with Material Code
+    public List<StockSfax> searchMaterialCode(String materialCode){
+        return   this.stockSfaxRepository.searchMaterialCode(materialCode);
+    }
+    // search with Material desc
+    public List<StockSfax> searchMaterialDesc(String materialDesc){
+        return   this.stockSfaxRepository.searchMaterialDesc(materialDesc);
+    }
 }

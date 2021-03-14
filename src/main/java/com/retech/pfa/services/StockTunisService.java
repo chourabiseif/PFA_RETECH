@@ -1,6 +1,7 @@
 package com.retech.pfa.services;
 
 import com.retech.pfa.helper.StockTunislExcelHelper;
+import com.retech.pfa.models.Bom;
 import com.retech.pfa.models.StockTunis;
 import com.retech.pfa.repositories.StockTunisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,13 @@ public class StockTunisService {
     public List<StockTunis> getStockTunis() {
 
         return this.stockTunisRepository.findAll( );
+    }
+    // search with Material Code
+    public List<StockTunis> searchMaterialCode(String materialCode){
+        return   this.stockTunisRepository.searchMaterialCode(materialCode);
+    }
+    // search with Material desc
+    public List<StockTunis> searchMaterialDesc(String materialDesc){
+        return   this.stockTunisRepository.searchMaterialDesc(materialDesc);
     }
 }

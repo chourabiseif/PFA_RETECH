@@ -1,6 +1,7 @@
 package com.retech.pfa.controllers;
 
 import com.retech.pfa.helper.CountryStockExcelHelper;
+import com.retech.pfa.models.Bom;
 import com.retech.pfa.models.CountryStock;
 import com.retech.pfa.playLoad.responses.ResponseMessage;
 import com.retech.pfa.services.CountryStockService;
@@ -45,5 +46,17 @@ public class CountryStockControllers {
     public  ResponseEntity<List<CountryStock>> getCountryStocks(){
         List<CountryStock> listCountryStock = this.countryStockService.getCountryStocks();
         return new ResponseEntity<>(listCountryStock , HttpStatus.OK);
+    }
+    // search with material code
+    @GetMapping("/materialCode/{materialCode}")
+    public ResponseEntity<List<CountryStock>> searchMaterialCode(@PathVariable(value = "materialCode") String materialCode){
+        List<CountryStock> countryStockList = this.countryStockService.searchMaterialCode(materialCode);
+        return new ResponseEntity<>(countryStockList, HttpStatus.OK);
+    }
+    // search with material name
+    @GetMapping("/materialName/{materialName}")
+    public ResponseEntity<List<CountryStock>> searchMaterialName(@PathVariable(value = "materialName") String materialName){
+        List<CountryStock> countryStockList = this.countryStockService.searchMaterialName(materialName);
+        return new ResponseEntity<>(countryStockList, HttpStatus.OK);
     }
 }

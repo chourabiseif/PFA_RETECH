@@ -48,4 +48,16 @@ public class StockTunisControllers {
         List<StockTunis> stockTunisList = this.stockTunisService.getStockTunis();
         return new ResponseEntity<>(stockTunisList , HttpStatus.OK);
     }
+    // search with materialcode
+    @GetMapping("/materialCode/{materialCode}")
+    public ResponseEntity<List<StockTunis>> searchMaterialCode(@PathVariable(value = "materialCode") String materialCode){
+        List<StockTunis> stockTunisList = this.stockTunisService.searchMaterialCode(materialCode);
+        return new ResponseEntity<>(stockTunisList, HttpStatus.OK);
+    }
+    // search with description
+    @GetMapping("/materialDesc/{materialDesc}")
+    public ResponseEntity<List<StockTunis>> searchMaterialDesc(@PathVariable(value = "materialDesc") String materialDesc){
+        List<StockTunis> stockTunisList = this.stockTunisService.searchMaterialDesc(materialDesc);
+        return new ResponseEntity<>(stockTunisList, HttpStatus.OK);
+    }
 }
