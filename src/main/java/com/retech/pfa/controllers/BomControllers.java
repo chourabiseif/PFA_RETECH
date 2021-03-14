@@ -46,5 +46,11 @@ public class BomControllers {
         List<Bom> listBom = this.bomService.getBoms();
         return new ResponseEntity<>(listBom , HttpStatus.OK);
     }
+    // search
+    @GetMapping("/{description}/{model}/{sap}")
+    public ResponseEntity<List<Bom>> searchBom(@PathVariable(value = "description") String description, @PathVariable(value = "model") String model, @PathVariable(value = "sap") String sap){
+        List<Bom> bomList = this.bomService.searchBom(description,model,sap);
+        return new ResponseEntity<>(bomList, HttpStatus.OK);
+    }
 
 }
