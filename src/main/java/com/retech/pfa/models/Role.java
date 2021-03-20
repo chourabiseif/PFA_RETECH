@@ -1,5 +1,6 @@
 package com.retech.pfa.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,41 +11,33 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-
 @Entity
-@Table(name ="users" )
-//Lombok annotations
+@Table(name = "roles")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
-public class User implements Serializable {
+@NoArgsConstructor
+@EqualsAndHashCode(exclude = {"createdAt", "updatedAt", "users"})
+
+public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(value = AccessLevel.NONE)
     private Long id;
-    @NonNull
-    private String nom;
-    @NonNull
-    private String prenom;
-    @NonNull
-    private String username;
-    @NonNull
-    private String motDePasse;
 
-
-    @ManyToOne
-    @JoinColumn(name="agence_id", nullable=true)
-    private Agence agence;
+    @NonNull
+    @Enumerated(EnumType.STRING)
+    @Column(length = 15)
+    private ERole name;
 
     // ManyToMany Relations
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "roles_users",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "role_id") })
-    private Set<Role> roles = new HashSet<>();
-
-    // created at and updated at
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "roles")
+    private Set<User> users = new HashSet<>();
 
     @Setter(value = AccessLevel.NONE)
     @Basic(optional = false)
@@ -58,6 +51,4 @@ public class User implements Serializable {
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt = new Date();
-
-
 }

@@ -2,9 +2,8 @@ package com.retech.pfa.controllers;
 
 
 import com.retech.pfa.exceptions.ResourceNotFoundException;
-import com.retech.pfa.models.Agence;
 import com.retech.pfa.models.User;
-import com.retech.pfa.playLoad.responses.ResponseMessage;
+import com.retech.pfa.payLoad.responses.ResponseMessage;
 import com.retech.pfa.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,6 +59,12 @@ public class UserControllers {
     public ResponseEntity<ResponseMessage> affectAgenceToUser(@PathVariable(value ="userId" ) Long userId,@PathVariable(value="agenceId") Long agenceId){
         String message = this.userService.affectAgenceToUser(userId,agenceId);
         return new  ResponseEntity<>(new ResponseMessage(message), HttpStatus.OK);
+    }
+    // Affecter Role to user
+    @PutMapping("/affect-role/{idUser}/{idRole}")
+    public ResponseEntity<ResponseMessage> affectUserToRole(@PathVariable(value ="idUser" )Long idUser,@PathVariable(value ="idRole" ) Long idRole) throws ResourceNotFoundException {
+        String message = this.userService.affectUserToRole(idUser, idRole);
+        return new ResponseEntity<>(new ResponseMessage(message), HttpStatus.OK);
     }
 
 }

@@ -2,7 +2,7 @@ package com.retech.pfa.controllers;
 
 import com.retech.pfa.helper.BOMExcelHelper;
 import com.retech.pfa.models.Bom;
-import com.retech.pfa.playLoad.responses.ResponseMessage;
+import com.retech.pfa.payLoad.responses.ResponseMessage;
 
 import com.retech.pfa.services.BomService;
 import org.springframework.beans.factory.annotation.Autowired;

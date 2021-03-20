@@ -1,4 +1,4 @@
-package com.retech.pfa.playLoad.responses;
+package com.retech.pfa.payLoad.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
