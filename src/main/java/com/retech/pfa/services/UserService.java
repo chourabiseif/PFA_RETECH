@@ -67,6 +67,7 @@ public class UserService {
         if (userData.isPresent()) {
             Agence agence = agenceData.orElseThrow(()-> new ResourceNotFoundException("Agence not found"));
             User userfound = userData.orElseThrow(() -> new ResourceNotFoundException("User not found"));
+            user.setMotDePasse(passwordEncoder.encode(user.getMotDePasse()));
             userfound.setMotDePasse(user.getMotDePasse());
             userfound.setNom(user.getNom());
             userfound.setPrenom(user.getPrenom());

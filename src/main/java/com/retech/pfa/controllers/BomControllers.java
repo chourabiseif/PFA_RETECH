@@ -2,6 +2,7 @@ package com.retech.pfa.controllers;
 
 import com.retech.pfa.helper.BOMExcelHelper;
 import com.retech.pfa.models.Bom;
+import com.retech.pfa.payLoad.responses.ResponseList;
 import com.retech.pfa.payLoad.responses.ResponseMessage;
 
 import com.retech.pfa.services.BomService;
@@ -65,4 +66,10 @@ public class BomControllers {
         return new ResponseEntity<>(bomList, HttpStatus.OK);
     }
 
+    // get models
+    @GetMapping("/models/{sapCode}")
+    public ResponseEntity<ResponseList> getModels(@PathVariable(value = "sapCode") Long sapCode){
+        List<String> bomList = this.bomService.getModels(sapCode);
+        return new ResponseEntity<>(new ResponseList(bomList), HttpStatus.OK);
+    }
 }

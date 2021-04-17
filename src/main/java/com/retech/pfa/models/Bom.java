@@ -13,7 +13,7 @@ import javax.persistence.*;
 
 public class Bom {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(value =AccessLevel.NONE)
     private long id;
 

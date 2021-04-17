@@ -20,13 +20,13 @@ import java.util.Set;
 
 public class Role implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(value = AccessLevel.NONE)
     private Long id;
 
     @NonNull
     @Enumerated(EnumType.STRING)
-    @Column(length = 15)
+    @Column(name = "name")
     private ERole name;
 
     // ManyToMany Relations

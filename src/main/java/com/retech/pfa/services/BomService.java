@@ -47,4 +47,11 @@ public class BomService {
     public List<Bom> searchBomSapCode(long sapCode){
         return   this.bomRepository.searchBomSapCode(sapCode);
     }
+
+    // search with description
+    public List<String> getModels(Long sapCode){
+        List<String>   list = this.bomRepository.getModel(sapCode);
+        System.out.println(list);
+        return  list;
+    }
 }

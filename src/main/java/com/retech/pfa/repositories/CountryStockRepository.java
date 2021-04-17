@@ -1,6 +1,5 @@
 package com.retech.pfa.repositories;
 
-import com.retech.pfa.models.Bom;
 import com.retech.pfa.models.CountryStock;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

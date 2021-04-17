@@ -20,7 +20,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(value = AccessLevel.NONE)
     private Long id;
     @NonNull

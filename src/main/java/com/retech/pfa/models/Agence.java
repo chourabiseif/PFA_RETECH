@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Agence implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(value = AccessLevel.NONE)
     private Long id;
     @NonNull

@@ -13,6 +13,7 @@ import java.util.List;
 
 @Service
 public class CountryStockService {
+
     @Autowired
     CountryStockRepository countryStockRepository;
 
@@ -30,6 +31,7 @@ public class CountryStockService {
         }
     }
     // get all data from CountryStock table
+
     public List<CountryStock> getCountryStocks() {
 
         return this.countryStockRepository.findAll( );

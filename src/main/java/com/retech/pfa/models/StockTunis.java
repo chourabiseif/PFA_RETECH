@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class StockTunis {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(value = AccessLevel.NONE)
     private long id;
 

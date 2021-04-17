@@ -11,6 +11,13 @@ import java.util.List;
 
 @Repository
 public interface BomRepository  extends JpaRepository<Bom, Long> {
+
+    // get model for sap code
+    @Query(value = "SELECT brand,model from bom where sap_code = ?1", nativeQuery = true)
+    List<String> getModel(Long sapCode);
+
+
+
     //search description
     @Query(value="SELECT * from bom where componentdescription_english like %?1% " , nativeQuery = true)
     List<Bom> searchBomDescription(String description);

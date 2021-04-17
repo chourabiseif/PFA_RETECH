@@ -1,20 +1,15 @@
-package com.retech.pfa.models;
+package com.retech.pfa.payLoad.responses;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import java.util.List;
 
-@Entity
-@Table(name = "CountryStock")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CountryStock {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(value = AccessLevel.NONE)
-    private long id;
-
+public class CountryStockResponse {
     private String CountryCode;
     private String CountryName;
     private String PlantCode;
@@ -29,4 +24,6 @@ public class CountryStock {
     private String StoreName;
     private long TransitQty;
     private long ActualSQty;
+    // model and brand and color from bom
+    private List<String> Models;
 }
