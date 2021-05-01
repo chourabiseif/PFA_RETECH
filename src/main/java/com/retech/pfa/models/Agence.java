@@ -30,7 +30,7 @@ public class Agence implements Serializable {
 
     // OneToMany Relations
     @JsonIgnore
-    @OneToMany(mappedBy="agence")
+    @OneToMany(mappedBy="agence", orphanRemoval = true, cascade = CascadeType.PERSIST)
     private List<User> users;
 
     // created at and updated at
