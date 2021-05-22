@@ -2,6 +2,7 @@ package com.retech.pfa.services;
 
 import com.retech.pfa.exceptions.ResourceNotFoundException;
 import com.retech.pfa.models.Agence;
+import com.retech.pfa.models.ERole;
 import com.retech.pfa.models.Role;
 import com.retech.pfa.models.User;
 import com.retech.pfa.repositories.AgenceRepository;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -29,13 +31,48 @@ public class UserService {
     RoleRepository roleRepository;
 
     //ajouter utlisateur
-    public  String addUser(User user , Long agenceId) throws ResourceNotFoundException {
+    public  String addUser(User user , Long agenceId, String role) throws ResourceNotFoundException {
 
         Optional<Agence> agencedata = this.agenceRepository.findById(agenceId);
         if(agencedata.isPresent()){
             Agence agence = agencedata.orElseThrow(()-> new ResourceNotFoundException("Agence not found"));
             user.setAgence(agence);
             user.setMotDePasse(passwordEncoder.encode(user.getMotDePasse()));
+
+            // Traitement du Role
+            Set<Role> roles = new HashSet<>();
+            switch (role) {
+                case "ADMIN":
+                    Role administrateurRole = this.roleRepository.findByName(ERole.ADMIN)
+                            .orElseThrow(() -> new ResourceNotFoundException("Error: Role is not found."));
+                    roles.add(administrateurRole);
+                    // Affect administrateur Role
+                    user.setRoles(roles);
+                    break;
+                case "MAGASINIER":
+                    Role magasinierRole = this.roleRepository.findByName(ERole.MAGASINIER)
+                            .orElseThrow(() -> new ResourceNotFoundException("Error: Role is not found."));
+                    roles.add(magasinierRole);
+                    // Affect magasinier Role
+                    user.setRoles(roles);
+                    break;
+                case "MAGASINIERSOUSSE":
+                    Role magasinierSousseRole = this.roleRepository.findByName(ERole.MAGASINIERSOUSSE)
+                            .orElseThrow(() -> new ResourceNotFoundException("Error: Role is not found."));
+                    roles.add(magasinierSousseRole);
+                    // Affect magasinierSousse Role
+                    user.setRoles(roles);
+                    break;
+                case "MAGASINIERSFAX":
+                    Role magasinierSfaxRole = this.roleRepository.findByName(ERole.MAGASINIERSFAX)
+                            .orElseThrow(() -> new ResourceNotFoundException("Error: Role is not found."));
+                    roles.add(magasinierSfaxRole);
+                    // Affect magasinierSfax Role
+                    user.setRoles(roles);
+                    break;
+            }
+
+
             this.userRepository.save(user);
             return "Utilisateur ajouté avec succés";
         }
@@ -50,6 +87,17 @@ public class UserService {
     public List<User> getUsers(){
 
         return  this.userRepository.findAll();
+    }
+    // find user by username
+    @Transactional(readOnly = true)
+    public User findByUsername(String username) {
+        User user = null;
+        try {
+            user = userRepository.findByUsername(username);
+        } catch (Exception e) {
+            throw e;
+        }
+        return user;
     }
 
     // récupérer user by id

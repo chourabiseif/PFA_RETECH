@@ -19,9 +19,9 @@ public class UserControllers {
     private UserService userService;
 
     //ajouter utilisateur
-    @RequestMapping(value = "/users/{agenceId}", method = RequestMethod.POST)
-    public ResponseEntity<ResponseMessage> addUser(@RequestBody User user, @PathVariable(value = "agenceId")Long agenceId) throws ResourceNotFoundException {
-        String message = this.userService.addUser(user,agenceId) ;
+    @RequestMapping(value = "/users/{agenceId}/{role}", method = RequestMethod.POST)
+    public ResponseEntity<ResponseMessage> addUser(@RequestBody User user, @PathVariable(value = "agenceId")Long agenceId, @PathVariable(value = "role") String role) throws ResourceNotFoundException {
+        String message = this.userService.addUser(user,agenceId,role) ;
         return new ResponseEntity<>(new ResponseMessage(message) , HttpStatus.OK);
     }
 
@@ -31,6 +31,14 @@ public class UserControllers {
     {
         List<User> userList = this.userService.getUsers() ;
         return new ResponseEntity<>(userList , HttpStatus.OK);
+    }
+
+    // Récupérer un utilisateur par son id
+    @GetMapping("/users/username/{username}")
+    public ResponseEntity<?> findUserByUsername(@PathVariable("username") String username)
+    {
+        User user = this.userService.findByUserName(username);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     // récupérer user by id
